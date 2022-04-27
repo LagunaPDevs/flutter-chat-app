@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:realtime_chat/common/blue_button.dart';
 import 'package:realtime_chat/common/custom_input_field.dart';
+import 'package:realtime_chat/common/show_alert.dart';
+import 'package:realtime_chat/services/auth_service.dart';
 
 class RegisterForm extends StatefulWidget {
   const RegisterForm({Key? key}) : super(key: key);
@@ -15,13 +18,14 @@ class _RegisterFormState extends State<RegisterForm> {
   final TextEditingController pswdController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    final authService = Provider.of<AuthService>(context);
     return Container(
         margin: EdgeInsets.only(top: 40),
         padding: EdgeInsets.symmetric(horizontal: 50),
         child: Column(
           children: [
             CustomInputField(
-              controller: emailController,
+              controller: nameController,
               inputType: TextInputType.text,
               obscure: false,
               icon: Icon(Icons.perm_identity),
@@ -42,7 +46,24 @@ class _RegisterFormState extends State<RegisterForm> {
             ),
             BlueButton(
               text: 'Sign up',
-              onPressed: () => {},
+              onPressed: authService.authenticating
+                  ? null
+                  : () async {
+                      // Close keyboard
+                      FocusScope.of(context).unfocus();
+
+                      final registerOk = await authService.register(
+                          nameController.text.trim(),
+                          emailController.text.trim(),
+                          pswdController.text.trim());
+                      if (registerOk == true) {
+                        // TODO: Connect to socket server
+                        Navigator.pushReplacementNamed(context, 'users');
+                      } else {
+                        showAlert(context, 'Registration failed',
+                            registerOk.toString());
+                      }
+                    },
             ),
           ],
         ));
