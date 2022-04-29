@@ -4,6 +4,7 @@ import 'package:realtime_chat/common/blue_button.dart';
 import 'package:realtime_chat/common/custom_input_field.dart';
 import 'package:realtime_chat/common/show_alert.dart';
 import 'package:realtime_chat/services/auth_service.dart';
+import 'package:realtime_chat/services/socket_service.dart';
 
 class RegisterForm extends StatefulWidget {
   const RegisterForm({Key? key}) : super(key: key);
@@ -19,6 +20,7 @@ class _RegisterFormState extends State<RegisterForm> {
   @override
   Widget build(BuildContext context) {
     final authService = Provider.of<AuthService>(context);
+    final socketService = Provider.of<SocketService>(context);
     return Container(
         margin: EdgeInsets.only(top: 40),
         padding: EdgeInsets.symmetric(horizontal: 50),
@@ -57,7 +59,8 @@ class _RegisterFormState extends State<RegisterForm> {
                           emailController.text.trim(),
                           pswdController.text.trim());
                       if (registerOk == true) {
-                        // TODO: Connect to socket server
+                        // Connect to socket server
+                        socketService.connect();
                         Navigator.pushReplacementNamed(context, 'users');
                       } else {
                         showAlert(context, 'Registration failed',
