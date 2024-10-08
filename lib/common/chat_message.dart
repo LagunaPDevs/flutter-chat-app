@@ -7,7 +7,7 @@ class ChatMessage extends StatelessWidget {
   final String uid;
   final AnimationController animationController;
 
-  ChatMessage(
+  const ChatMessage(
       {Key? key,
       required this.text,
       required this.uid,
@@ -23,8 +23,7 @@ class ChatMessage extends StatelessWidget {
         sizeFactor:
             CurvedAnimation(parent: animationController, curve: Curves.easeOut),
         child: Container(
-          child:
-              this.uid == authService.user.uid ? _myMessage() : _notMyMessage(),
+          child: uid == authService.user.uid ? _myMessage() : _notMyMessage(),
         ),
       ),
     );
@@ -34,11 +33,12 @@ class ChatMessage extends StatelessWidget {
     return Align(
       alignment: Alignment.centerRight,
       child: Container(
-        margin: EdgeInsets.only(bottom: 5, left: 50, right: 5),
-        padding: EdgeInsets.all(8.0),
-        child: Text(this.text, style: TextStyle(color: Colors.white)),
+        margin: const EdgeInsets.only(bottom: 5, left: 50, right: 5),
+        padding: const EdgeInsets.all(8.0),
+        child: Text(text, style: const TextStyle(color: Colors.white)),
         decoration: BoxDecoration(
-            color: Color(0xff4D9EF6), borderRadius: BorderRadius.circular(20)),
+            color: const Color(0xff4D9EF6),
+            borderRadius: BorderRadius.circular(20)),
       ),
     );
   }
@@ -47,11 +47,12 @@ class ChatMessage extends StatelessWidget {
     return Align(
       alignment: Alignment.centerLeft,
       child: Container(
-        margin: EdgeInsets.only(bottom: 5, left: 5, right: 50),
-        padding: EdgeInsets.all(8.0),
-        child: Text(this.text, style: TextStyle(color: Colors.black87)),
+        margin: const EdgeInsets.only(bottom: 5, left: 5, right: 50),
+        padding: const EdgeInsets.all(8.0),
+        child: Text(text, style: const TextStyle(color: Colors.black87)),
         decoration: BoxDecoration(
-            color: Color(0xffE4E5E8), borderRadius: BorderRadius.circular(20)),
+            color: const Color(0xffE4E5E8),
+            borderRadius: BorderRadius.circular(20)),
       ),
     );
   }

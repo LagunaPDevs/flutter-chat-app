@@ -12,30 +12,30 @@ class AuthService with ChangeNotifier {
   late User user;
   bool _authenticate = false;
 
-  final _storage = new FlutterSecureStorage();
+  final _storage = const FlutterSecureStorage();
 
-  bool get authenticating => this._authenticate;
+  bool get authenticating => _authenticate;
   set authenticating(bool value) {
-    this._authenticate = value;
+    _authenticate = value;
     notifyListeners();
   }
 
   // Getters static token
   static Future<String> getToken() async {
-    final _storage = new FlutterSecureStorage();
+    final _storage = const FlutterSecureStorage();
     final token = await _storage.read(key: 'token');
     return token!;
   }
 
   static Future<void> deleteToken() async {
-    final _storage = new FlutterSecureStorage();
+    final _storage = const FlutterSecureStorage();
     final token = await _storage.delete(key: 'token');
   }
 
   // Login
   // -----
   Future<bool> login(String email, String password) async {
-    this.authenticating = true;
+    authenticating = true;
 
     final data = {'email': email, 'password': password};
 
@@ -43,14 +43,14 @@ class AuthService with ChangeNotifier {
         body: jsonEncode(data), headers: {'Content-Type': 'application/json'});
 
     print(resp.body);
-    this.authenticating = false;
+    authenticating = false;
 
     if (resp.statusCode == 200) {
       final loginResponse = loginResponseFromJson(resp.body);
-      this.user = loginResponse.user;
+      user = loginResponse.user;
 
       // Save token
-      await this._saveToken(loginResponse.token);
+      await _saveToken(loginResponse.token);
       return true;
     } else {
       return false;
@@ -60,20 +60,20 @@ class AuthService with ChangeNotifier {
   // Registration
   // -----
   Future register(String name, String email, String password) async {
-    this.authenticating = true;
+    authenticating = true;
     final data = {'name': name, 'email': email, 'password': password};
 
     final resp = await http.post(Uri.parse('${Environment.apiUrl}/login/new'),
         body: jsonEncode(data), headers: {'Content-Type': 'application/json'});
 
     print(resp.body);
-    this.authenticating = false;
+    authenticating = false;
     if (resp.statusCode == 200) {
       final loginResponse = loginResponseFromJson(resp.body);
-      this.user = loginResponse.user;
+      user = loginResponse.user;
 
       // Save token
-      await this._saveToken(loginResponse.token);
+      await _saveToken(loginResponse.token);
       return true;
     } else {
       final respBody = jsonDecode(resp.body);
@@ -89,17 +89,17 @@ class AuthService with ChangeNotifier {
   }
 
   Future<bool> isLoggedIn() async {
-    final token = await this._storage.read(key: 'token') ?? '';
+    final token = await _storage.read(key: 'token') ?? '';
     final resp = await http.get(Uri.parse('${Environment.apiUrl}/login/renew'),
         headers: {'Content-Type': 'application/json', 'x-token': token});
     print(token);
     if (resp.statusCode == 200) {
       final loginResponse = loginResponseFromJson(resp.body);
-      this.user = loginResponse.user;
-      await this._saveToken(loginResponse.token);
+      user = loginResponse.user;
+      await _saveToken(loginResponse.token);
       return true;
     } else {
-      this.logout();
+      logout();
       return false;
     }
   }

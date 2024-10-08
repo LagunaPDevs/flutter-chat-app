@@ -22,28 +22,28 @@ class _RegisterFormState extends State<RegisterForm> {
     final authService = Provider.of<AuthService>(context);
     final socketService = Provider.of<SocketService>(context);
     return Container(
-        margin: EdgeInsets.only(top: 40),
-        padding: EdgeInsets.symmetric(horizontal: 50),
+        margin: const EdgeInsets.only(top: 40),
+        padding: const EdgeInsets.symmetric(horizontal: 50),
         child: Column(
           children: [
             CustomInputField(
               controller: nameController,
               inputType: TextInputType.text,
               obscure: false,
-              icon: Icon(Icons.perm_identity),
+              icon: const Icon(Icons.perm_identity),
               hintText: 'Name',
             ),
             CustomInputField(
               controller: emailController,
               inputType: TextInputType.emailAddress,
               obscure: false,
-              icon: Icon(Icons.email_outlined),
+              icon: const Icon(Icons.email_outlined),
               hintText: 'Email',
             ),
             CustomInputField(
               controller: pswdController,
               obscure: true,
-              icon: Icon(Icons.lock_outline),
+              icon: const Icon(Icons.lock_outline),
               hintText: 'Password',
             ),
             BlueButton(
