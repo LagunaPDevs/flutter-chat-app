@@ -6,13 +6,15 @@ import 'package:realtime_chat/services/auth_service.dart';
 import 'package:realtime_chat/services/socket_service.dart';
 
 class LoadingPage extends StatelessWidget {
+  const LoadingPage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: FutureBuilder(
         future: checkLoginState(context),
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-          return Center(
+          return const Center(
             child: Text('Wait...'),
           );
         },
@@ -35,14 +37,14 @@ class LoadingPage extends StatelessWidget {
           context,
           PageRouteBuilder(
               pageBuilder: (_, __, ___) => UsersPage(),
-              transitionDuration: Duration(milliseconds: 0)));
+              transitionDuration: const Duration(milliseconds: 0)));
     } else {
       // Replace default animation between pages
       Navigator.pushReplacement(
           context,
           PageRouteBuilder(
               pageBuilder: (_, __, ___) => LoginPage(),
-              transitionDuration: Duration(milliseconds: 0)));
+              transitionDuration: const Duration(milliseconds: 0)));
     }
   }
 }

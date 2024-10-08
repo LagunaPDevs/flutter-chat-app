@@ -4,7 +4,7 @@ class Labels extends StatelessWidget {
   final String account;
   final String textButton;
   final String destination;
-  Labels(
+  const Labels(
       {Key? key,
       required this.account,
       required this.textButton,
@@ -18,12 +18,12 @@ class Labels extends StatelessWidget {
         children: [
           Text(
             account,
-            style: TextStyle(
+            style: const TextStyle(
                 color: Colors.black54,
                 fontSize: 15,
                 fontWeight: FontWeight.w300),
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           GestureDetector(

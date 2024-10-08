@@ -9,15 +9,17 @@ import 'package:realtime_chat/services/chat_service.dart';
 import 'package:realtime_chat/services/socket_service.dart';
 
 class ChatPage extends StatefulWidget {
+  const ChatPage({Key? key}) : super(key: key);
+
   @override
   State<ChatPage> createState() => _ChatPageState();
 }
 
 class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
-  List<ChatMessage> _messages = [];
+  final List<ChatMessage> _messages = [];
   bool isWriting = false;
-  TextEditingController controller = new TextEditingController();
-  FocusNode focusNode = new FocusNode();
+  TextEditingController controller = TextEditingController();
+  FocusNode focusNode = FocusNode();
 
   late ChatService chatService;
   late SocketService socketService;
@@ -44,7 +46,7 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
       text: payload['message'],
       uid: payload['from'],
       animationController: AnimationController(
-          vsync: this, duration: Duration(milliseconds: 300)),
+          vsync: this, duration: const Duration(milliseconds: 300)),
     );
     setState(() {
       _messages.insert(0, message);
@@ -62,7 +64,7 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
         text: m.message,
         uid: m.from,
         animationController: AnimationController(
-            vsync: this, duration: Duration(milliseconds: 0))
+            vsync: this, duration: const Duration(milliseconds: 0))
           ..forward()));
     setState(() {
       _messages.insertAll(0, history);
@@ -81,16 +83,16 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
             CircleAvatar(
               child: Text(
                 userTo.name.substring(0, 2),
-                style: TextStyle(fontSize: 12),
+                style: const TextStyle(fontSize: 12),
               ),
               backgroundColor: Colors.blue.shade100,
               maxRadius: 14,
             ),
-            SizedBox(
+            const SizedBox(
               height: 3,
             ),
             Text(userTo.name,
-                style: TextStyle(color: Colors.black87, fontSize: 12)),
+                style: const TextStyle(color: Colors.black87, fontSize: 12)),
           ],
         ),
       ),
@@ -99,13 +101,13 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
           children: [
             Flexible(
               child: ListView.builder(
-                physics: BouncingScrollPhysics(),
+                physics: const BouncingScrollPhysics(),
                 itemCount: _messages.length,
                 itemBuilder: (_, i) => _messages[i],
                 reverse: true,
               ),
             ),
-            Divider(
+            const Divider(
               height: 1,
             ),
             // TODO: Caja de texto
@@ -119,7 +121,7 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
   Widget _ChatInputBox() {
     return SafeArea(
       child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 8.0),
+        margin: const EdgeInsets.symmetric(horizontal: 8.0),
         color: Colors.white,
         height: 50,
         child: Row(
@@ -130,14 +132,15 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
               onSubmitted: (_) {},
               onChanged: (text) {
                 setState(() {
-                  if (text.trim().length > 0) {
+                  if (text.trim().isNotEmpty) {
                     isWriting = true;
                   } else {
                     isWriting = false;
                   }
                 });
               },
-              decoration: InputDecoration.collapsed(hintText: 'Send message'),
+              decoration:
+                  const InputDecoration.collapsed(hintText: 'Send message'),
               focusNode: focusNode,
             )),
             // Send button
@@ -151,14 +154,14 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
   }
 
   _handleSubmit(List<ChatMessage> listMsg) {
-    if (controller.text.length == 0) return;
+    if (controller.text.isEmpty) return;
     setState(() {
       isWriting = false;
       final newMsg = ChatMessage(
           uid: authService.user.uid,
           text: controller.text,
           animationController: AnimationController(
-              vsync: this, duration: Duration(milliseconds: 400)));
+              vsync: this, duration: const Duration(milliseconds: 400)));
       listMsg.insert(0, newMsg);
       newMsg.animationController.forward();
     });
