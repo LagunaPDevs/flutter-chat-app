@@ -4,12 +4,15 @@ import 'package:realtime_chat/routes/routes.dart';
 import 'package:realtime_chat/services/auth_service.dart';
 import 'package:realtime_chat/services/chat_service.dart';
 import 'package:realtime_chat/services/socket_service.dart';
+import 'package:realtime_chat/themes/light_theme.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -21,11 +24,11 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => ChatService())
       ],
       child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Chat App',
-        initialRoute: 'loading',
-        routes: appRoutes,
-      ),
+          debugShowCheckedModeBanner: false,
+          title: 'Chat App',
+          initialRoute: 'loading',
+          routes: appRoutes,
+          theme: lightTheme),
     );
   }
 }

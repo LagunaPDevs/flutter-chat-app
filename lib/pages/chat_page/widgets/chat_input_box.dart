@@ -14,14 +14,14 @@ class ChatInputBox extends StatefulWidget {
 class _ChatInputBoxState extends State<ChatInputBox>
     with TickerProviderStateMixin {
   bool isWriting = false;
-  TextEditingController controller = new TextEditingController();
-  FocusNode focusNode = new FocusNode();
+  TextEditingController controller = TextEditingController();
+  FocusNode focusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 8.0),
+        margin: const EdgeInsets.symmetric(horizontal: 8.0),
         color: Colors.white,
         height: 50,
         child: Row(
@@ -32,14 +32,15 @@ class _ChatInputBoxState extends State<ChatInputBox>
               onSubmitted: (_) {},
               onChanged: (text) {
                 setState(() {
-                  if (text.trim().length > 0) {
+                  if (text.trim().isNotEmpty) {
                     isWriting = true;
                   } else {
                     isWriting = false;
                   }
                 });
               },
-              decoration: InputDecoration.collapsed(hintText: 'Send message'),
+              decoration:
+                  const InputDecoration.collapsed(hintText: 'Send message'),
               focusNode: focusNode,
             )),
             // Send button
@@ -53,7 +54,7 @@ class _ChatInputBoxState extends State<ChatInputBox>
   }
 
   _handleSubmit() {
-    if (controller.text.length == 0) return;
+    if (controller.text.isEmpty) return;
     List<ChatMessage> listMsg = widget.messages;
     print(controller.text);
     setState(() {
@@ -62,7 +63,7 @@ class _ChatInputBoxState extends State<ChatInputBox>
           uid: '123',
           text: controller.text,
           animationController: AnimationController(
-              vsync: this, duration: Duration(milliseconds: 400)));
+              vsync: this, duration: const Duration(milliseconds: 400)));
       listMsg.insert(0, newMsg);
       newMsg.animationController.forward();
     });

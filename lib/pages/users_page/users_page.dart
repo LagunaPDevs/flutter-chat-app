@@ -8,12 +8,14 @@ import 'package:realtime_chat/services/socket_service.dart';
 import 'package:realtime_chat/services/users_service.dart';
 
 class UsersPage extends StatefulWidget {
+  const UsersPage({Key? key}) : super(key: key);
+
   @override
   State<UsersPage> createState() => _UsersPageState();
 }
 
 class _UsersPageState extends State<UsersPage> {
-  RefreshController _refreshController =
+  final RefreshController _refreshController =
       RefreshController(initialRefresh: false);
   final usersSevice = UsersService();
   List<User> users = [];
@@ -32,7 +34,7 @@ class _UsersPageState extends State<UsersPage> {
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          title: Text(user.name, style: TextStyle(color: Colors.black54)),
+          title: Text(user.name, style: const TextStyle(color: Colors.black54)),
           elevation: 1,
           backgroundColor: Colors.white,
           leading: IconButton(
@@ -43,13 +45,13 @@ class _UsersPageState extends State<UsersPage> {
                 Navigator.pushReplacementNamed(context, 'login');
                 authService.logout();
               },
-              icon: Icon(Icons.exit_to_app, color: Colors.black54)),
+              icon: const Icon(Icons.exit_to_app, color: Colors.black54)),
           actions: [
             Container(
-                margin: EdgeInsets.only(right: 10),
+                margin: const EdgeInsets.only(right: 10),
                 child: (socketService.serverStatus == ServerStatus.Online)
                     ? Icon(Icons.check_circle, color: Colors.blue.shade400)
-                    : Icon(Icons.offline_bolt, color: Colors.red))
+                    : const Icon(Icons.offline_bolt, color: Colors.red))
           ],
         ),
         body: SmartRefresher(
@@ -66,9 +68,9 @@ class _UsersPageState extends State<UsersPage> {
 
   ListView _usersListView() {
     return ListView.separated(
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         itemBuilder: (_, i) => UsersTileList(user: users[i]),
-        separatorBuilder: (_, i) => Divider(),
+        separatorBuilder: (_, i) => const Divider(),
         itemCount: users.length);
   }
 
