@@ -4,6 +4,7 @@ import 'package:realtime_chat/routes/routes.dart';
 import 'package:realtime_chat/services/auth_service.dart';
 import 'package:realtime_chat/services/chat_service.dart';
 import 'package:realtime_chat/services/socket_service.dart';
+import 'package:realtime_chat/themes/dark_theme.dart';
 import 'package:realtime_chat/themes/light_theme.dart';
 
 void main() {
@@ -24,11 +25,13 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => ChatService())
       ],
       child: MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'Chat App',
-          initialRoute: 'loading',
-          routes: appRoutes,
-          theme: lightTheme),
+        debugShowCheckedModeBanner: false,
+        title: 'Chat App',
+        initialRoute: 'loading',
+        routes: appRoutes,
+        theme: lightTheme,
+        darkTheme: darkTheme,
+      ),
     );
   }
 }
