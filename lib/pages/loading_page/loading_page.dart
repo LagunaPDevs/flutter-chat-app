@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+
+// external libraries
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
-import 'package:realtime_chat/pages/login_page/login_page.dart';
+
+// project imports
+import 'package:realtime_chat/pages/start_page/start_page.dart';
 import 'package:realtime_chat/pages/users_page/users_page.dart';
 import 'package:realtime_chat/services/auth_service.dart';
 import 'package:realtime_chat/services/socket_service.dart';
@@ -14,9 +19,13 @@ class LoadingPage extends StatelessWidget {
       body: FutureBuilder(
         future: checkLoginState(context),
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-          return const Center(
-            child: Text('Wait...'),
-          );
+          return Scaffold(
+              backgroundColor: Theme.of(context).primaryColor,
+              body: Center(
+                child: SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.5,
+                    child: Lottie.asset('assets/lottie/loading_lottie.json')),
+              ));
         },
       ),
     );
@@ -37,14 +46,14 @@ class LoadingPage extends StatelessWidget {
           context,
           PageRouteBuilder(
               pageBuilder: (_, __, ___) => const UsersPage(),
-              transitionDuration: const Duration(milliseconds: 0)));
+              transitionDuration: const Duration(milliseconds: 400)));
     } else {
       // Replace default animation between pages
       Navigator.pushReplacement(
           context,
           PageRouteBuilder(
-              pageBuilder: (_, __, ___) => const LoginPage(),
-              transitionDuration: const Duration(milliseconds: 0)));
+              pageBuilder: (_, __, ___) => const StartPage(),
+              transitionDuration: const Duration(milliseconds: 400)));
     }
   }
 }
