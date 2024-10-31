@@ -14,17 +14,17 @@ class SendButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 4.0),
+      margin: const EdgeInsets.symmetric(horizontal: 4.0),
       child: Platform.isIOS
-          ? CupertinoButton(child: Text('Send'), onPressed: clickAction)
+          ? CupertinoButton(child: const Text('Send'), onPressed: clickAction)
           : Container(
-              margin: EdgeInsets.symmetric(horizontal: 4.0),
+              margin: const EdgeInsets.symmetric(horizontal: 4.0),
               child: IconTheme(
                 data: IconThemeData(color: Colors.blue.shade400),
                 child: IconButton(
                   highlightColor: Colors.transparent,
                   splashColor: Colors.transparent,
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.send,
                   ),
                   onPressed: clickAction,

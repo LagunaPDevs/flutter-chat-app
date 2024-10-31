@@ -9,32 +9,32 @@ class SocketService with ChangeNotifier {
   ServerStatus _serverStatus = ServerStatus.Connecting;
   late IO.Socket _socket;
 
-  ServerStatus get serverStatus => this._serverStatus;
-  IO.Socket get socket => this._socket;
+  ServerStatus get serverStatus => _serverStatus;
+  IO.Socket get socket => _socket;
 
-  Function get emit => this._socket.emit;
+  Function get emit => _socket.emit;
 
   void connect() async {
     final token = await AuthService.getToken();
 
     // Dart client
-    this._socket = IO.io(Environment.socketUrl, {
+    _socket = IO.io(Environment.socketUrl, {
       'transports': ['websocket'],
       'autoConnect': true,
       'forceNew': true,
       'extraHeaders': {'x-token': token}
     });
-    this._socket.onConnect((_) {
-      this._serverStatus = ServerStatus.Online;
+    _socket.onConnect((_) {
+      _serverStatus = ServerStatus.Online;
       notifyListeners();
     });
 
-    this._socket.onDisconnect((_) {
-      this._serverStatus = ServerStatus.Offline;
+    _socket.onDisconnect((_) {
+      _serverStatus = ServerStatus.Offline;
       notifyListeners();
     });
 
-    this._socket.on('emitir-mensaje', (_) => print('recibiendo'));
+    _socket.on('emitir-mensaje', (_) => print('recibiendo'));
 
     // socket.on('nuevo-mensaje', (payload) {
     //   print('nuevo-mensaje:');
@@ -49,6 +49,6 @@ class SocketService with ChangeNotifier {
   }
 
   void disconnect() {
-    this._socket.disconnect();
+    _socket.disconnect();
   }
 }
