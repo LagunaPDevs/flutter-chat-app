@@ -18,7 +18,7 @@ class BlueButton extends StatelessWidget {
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           elevation: 2,
-          primary: Colors.blue,
+          backgroundColor: Colors.blue,
           shape: const StadiumBorder(),
         ),
         child: Center(
