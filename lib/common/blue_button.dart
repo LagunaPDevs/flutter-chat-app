@@ -17,9 +17,10 @@ class BlueButton extends StatelessWidget {
       height: 55,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-            elevation: 2,
-            shape: const StadiumBorder(),
-            backgroundColor: Colors.blue),
+          elevation: 2,
+          backgroundColor: Colors.blue,
+          shape: const StadiumBorder(),
+        ),
         child: Center(
           child: Text(text,
               style: const TextStyle(color: Colors.white, fontSize: 16)),
